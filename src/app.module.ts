@@ -17,10 +17,9 @@ import {ServeStaticModule} from "@nestjs/serve-static";
         TypeOrmModule.forRoot(ormConfig),
         ServeStaticModule.forRoot({rootPath:`${process.cwd()}/public`}),
         AuthModule,
-        UserModule,
+        UserModule
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [AppService]
 })
-export class AppModule {
-}
+export class AppModule {}
