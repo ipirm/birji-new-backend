@@ -1,12 +1,12 @@
-import {Module} from '@nestjs/common';
-import {AppController} from './app.controller';
-import {AppService} from './app.service';
+import {Module} from "@nestjs/common";
 import {ConfigModule} from "@nestjs/config";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {ormConfig} from "./orm.config";
-import {AuthModule} from './auth/auth.module';
-import {UserModule} from './user/user.module';
 import {ServeStaticModule} from "@nestjs/serve-static";
+import {AuthModule} from "./auth/auth.module";
+import {UserModule} from "./user/user.module";
+import {AppService} from "./app.service";
+import {AppController} from "./app.controller";
 
 @Module({
     imports: [
@@ -15,11 +15,13 @@ import {ServeStaticModule} from "@nestjs/serve-static";
             isGlobal: true
         }),
         TypeOrmModule.forRoot(ormConfig),
-        ServeStaticModule.forRoot({rootPath:`${process.cwd()}/public`}),
+        ServeStaticModule.forRoot({rootPath: `${process.cwd()}/public`}),
         AuthModule,
         UserModule
     ],
-    controllers: [AppController],
-    providers: [AppService]
+    providers: [AppService],
+    controllers: [AppController]
 })
-export class AppModule {}
+
+export class AppModule {
+}
