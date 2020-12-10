@@ -5,7 +5,10 @@ import {User} from "../decorators/user.decorator";
 import {AuthGuard} from "@nestjs/passport";
 import {RegistrationDto} from "./dto/registration-dto";
 import {LoginDto} from "./dto/login-dto";
+import {ApiTags} from "@nestjs/swagger";
 
+
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
     constructor(private auth: AuthService) {
