@@ -1,21 +1,21 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, VerifyCallback } from 'passport-google-oauth20';
+import { Strategy, VerifyCallback } from 'passport-twitter';
 
 import { Injectable } from '@nestjs/common';
 import {UserService} from "../../user/user.service";
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
+export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
     constructor(private readonly userService: UserService) {
         super({
-            clientID: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: process.env.GOOGLE_REDIRECT_URL,
+            consumerKey: process.env.TWITTER_CONSUMER_KEY,
+            consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+            callbackURL: process.env.TWITTER_CALLBACK_URL,
             scope: ['email', 'profile'],
         });
     }
-
     async validate(accessToken: string, refreshToken: string, profile: any, done: VerifyCallback): Promise<any> {
+        console.log(profile)
         const user = await this.userService.findOrCreate(
             profile,
         );

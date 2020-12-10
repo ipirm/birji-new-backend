@@ -43,28 +43,42 @@ export class AuthController {
         return res.redirect(`${process.env.FRONT_URL}/?access_token=${url.access_token}`)
     }
 
-    @Get("/facebook")
+    @Get("facebook")
     @UseGuards(AuthGuard("facebook"))
     facebookLogin() {
         return HttpStatus.OK;
     }
 
-    @Get("/facebook/redirect")
+    @Get("facebook/redirect")
     @UseGuards(AuthGuard("facebook"))
     async facebookLoginRedirect(@Req() req, @Res() res): Promise<any> {
         const url = await this.auth.signIn(req.user);
         return res.redirect(`${process.env.FRONT_URL}/?access_token=${url.access_token}`)
     }
 
-    @Get("/vkontakte")
+    @Get("vkontakte")
     @UseGuards(AuthGuard("vkontakte"))
     vkontakteLogin() {
         return HttpStatus.OK;
     }
 
-    @Get("/vkontakte/redirect")
+    @Get("vkontakte/redirect")
     @UseGuards(AuthGuard("vkontakte"))
     async vkontakteLoginRedirect(@Req() req, @Res() res): Promise<any> {
+        const url = await this.auth.signIn(req.user);
+        res.redirect(`${process.env.FRONT_URL}/?access_token=${url.access_token}`)
+    }
+
+
+    @Get("twitter")
+    @UseGuards(AuthGuard("twitter"))
+    twitterLogin() {
+        return HttpStatus.OK;
+    }
+
+    @Get("twitter/redirect")
+    @UseGuards(AuthGuard("twitter"))
+    async twitterLoginRedirect(@Req() req, @Res() res): Promise<any> {
         const url = await this.auth.signIn(req.user);
         res.redirect(`${process.env.FRONT_URL}/?access_token=${url.access_token}`)
     }

@@ -10,6 +10,7 @@ import {UserService} from "../user/user.service";
 import {VkontakteStrategy} from "./social/vkontakte.strategy";
 import {GoogleStrategy} from "./social/google.strategy";
 import {FacebookStrategy} from "./social/facebook.strategy";
+import {TwitterStrategy} from "./social/twitter.strategy";
 
 @Module({
     imports: [
@@ -19,7 +20,7 @@ import {FacebookStrategy} from "./social/facebook.strategy";
         }),
         TypeOrmModule.forFeature([UsersEntity]
         )],
-    providers: [AuthService, JwtStrategy, UserService,VkontakteStrategy,GoogleStrategy,FacebookStrategy],
+    providers: [AuthService, JwtStrategy, UserService,VkontakteStrategy,GoogleStrategy,FacebookStrategy,TwitterStrategy],
     controllers: [AuthController]
 })
 export class AuthModule {
