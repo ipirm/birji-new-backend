@@ -79,6 +79,7 @@ export class AuthController {
     @Get("twitter/redirect")
     @UseGuards(AuthGuard("twitter"))
     async twitterLoginRedirect(@Req() req, @Res() res): Promise<any> {
+        console.log(req.user);
         const url = await this.auth.signIn(req.user);
         res.redirect(`${process.env.FRONT_URL}/?access_token=${url.access_token}`)
     }
