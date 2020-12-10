@@ -16,7 +16,8 @@ export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
                   refreshToken: any,
                   params: any,
                   profile: any) => {
-             await this.userService.findOrCreate(profile)
+            console.log(profile);
+            await this.userService.findOrCreate(profile)
         })
     }
 }

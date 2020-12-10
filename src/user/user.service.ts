@@ -27,6 +27,9 @@ export class UserService {
     async findOrCreate(profile): Promise<any> {
         const {provider} = profile
         let user;
+        if (provider === 'twitter') {
+            user = await this.user.findOne({twitter_id: profile.id});
+        }
         if (provider === 'google') {
             user = await this.user.findOne({google_id: profile.id});
         }
