@@ -1,5 +1,5 @@
 import {PassportStrategy} from '@nestjs/passport';
-import {Strategy} from 'passport-twitter-oauth2';
+import {Strategy} from 'passport-twitter';
 
 import {Injectable} from '@nestjs/common';
 import {UserService} from "../../user/user.service";
@@ -8,11 +8,10 @@ import {UserService} from "../../user/user.service";
 export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
     constructor(private readonly userService: UserService) {
         super({
-            clientID: process.env.TWITTER_CONSUMER_KEY,
-            clientSecret: process.env.TWITTER_CONSUMER_SECRET,
+            consumerKey: process.env.TWITTER_CONSUMER_KEY,
+            consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
             callbackURL: process.env.TWITTER_CALLBACK_URL,
-            includeEmail: true,
-            profileFields: ['id', 'displayName', 'photos', 'email']
+            scope: ['email', 'profile'],
         }, async (accessToken: any,
                   refreshToken: any,
                   params: any,
