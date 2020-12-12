@@ -17,7 +17,7 @@ const config: any = {
         migrationsDir: 'src/database/migrations',
     }
 
-
+//
     // npx typeorm migration:create -n ArticleTable -d src/migrations
 
     // type: 'postgres',
