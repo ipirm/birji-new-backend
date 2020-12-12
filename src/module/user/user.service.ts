@@ -1,17 +1,20 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
-import {UsersEntity} from "../entities/user.entity";
+import {User} from "../../database/entities/user.entity";
 import {Repository} from "typeorm";
 import {RegistrationDto} from "../auth/dto/registration-dto";
+import {UpdateUserDto} from "./dto/update-user-dto";
+import {paginate, Pagination} from "nestjs-typeorm-paginate";
+import {UpdateResult, DeleteResult} from 'typeorm';
 
 @Injectable()
 export class UserService {
     constructor(
-        @InjectRepository(UsersEntity) private readonly user: Repository<UsersEntity>
+        @InjectRepository(User) private readonly user: Repository<User>
     ) {
     }
 
-    async createUser(registrationDto: RegistrationDto): Promise<any> {
+    async createUser(registrationDto: RegistrationDto): Promise<User> {
         const exist = await this.user.findOne({where: {email: registrationDto.email}})
         if (exist)
             throw new HttpException({
@@ -24,7 +27,7 @@ export class UserService {
         return await this.user.save(user);
     }
 
-    async findOrCreate(profile): Promise<any> {
+    async findOrCreate(profile): Promise<User> {
         const {provider} = profile
         let user;
         if (provider === 'twitter') {
@@ -66,7 +69,34 @@ export class UserService {
 
     }
 
-    async getAll(): Promise<any> {
-        return await this.user.find()
+    async getAll(page, limit): Promise<Pagination<User>> {
+        return await paginate(this.user, {page, limit})
     }
+
+    async updateUser(id, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+        const exist = await this.user.findOne({where: {email: updateUserDto.email}})
+        if (exist)
+            throw new HttpException({
+                status: HttpStatus.CONFLICT,
+                error: 'This user exist',
+            }, HttpStatus.CONFLICT);
+        return await this.user.update(id, updateUserDto)
+
+    }
+
+    async removeUser(id): Promise<DeleteResult> {
+        const exist = await this.user.findOne(id)
+        if (!exist)
+            throw new HttpException({
+                status: HttpStatus.CONFLICT,
+                error: 'This user doesnt exist',
+            }, HttpStatus.CONFLICT);
+
+        return await this.user.delete(id)
+    }
+
+    async getUser(id): Promise<User> {
+        return await this.user.findOne(id)
+    }
+
 }

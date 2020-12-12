@@ -3,7 +3,7 @@ import {AuthService} from './auth.service';
 import {AuthController} from './auth.controller';
 import {JwtModule} from "@nestjs/jwt";
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {UsersEntity} from "../entities/user.entity";
+import {User} from "../../database/entities/user.entity";
 import {jwtConstants} from "./jwt/constants";
 import {JwtStrategy} from "./jwt/jwt.strategy";
 import {UserService} from "../user/user.service";
@@ -18,8 +18,7 @@ import {TwitterStrategy} from "./social/twitter.strategy";
             secret: jwtConstants.secret,
             signOptions: {expiresIn: '286400s'},
         }),
-        TypeOrmModule.forFeature([UsersEntity]
-        )],
+        TypeOrmModule.forFeature([User])],
     providers: [AuthService, JwtStrategy, UserService,VkontakteStrategy,GoogleStrategy,FacebookStrategy,TwitterStrategy],
     controllers: [AuthController]
 })

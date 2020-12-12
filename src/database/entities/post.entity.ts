@@ -1,13 +1,13 @@
 import {Entity, Column, ManyToOne, OneToMany, ManyToMany, JoinTable} from 'typeorm'
 import {BaseEntity} from "./base.entity";
-import {UsersEntity} from "./user.entity";
-import {LikeEntity} from "./like.entity";
-import {CategoryEntity} from "./category.entity";
-import {TagEntity} from "./tag.entity";
+import {User} from "./user.entity";
+import {Like} from "./like.entity";
+import {Category} from "./category.entity";
+import {Tag} from "./tag.entity";
 
 @Entity('posts')
 
-export abstract class PostEntity extends BaseEntity {
+export class PostData extends BaseEntity {
 
     @Column({type: 'varchar', length: 500, nullable: true})
     meta_title: string;
@@ -33,16 +33,16 @@ export abstract class PostEntity extends BaseEntity {
     @Column({type: 'varchar', length: 500, nullable: true})
     reviewCount: number;
 
-    @ManyToOne(() => UsersEntity, user => user.posts)
-    user: UsersEntity;
+    @ManyToOne(() => User, user => user.posts)
+    user: User;
 
-    @OneToMany(() => LikeEntity, like => like.post, {cascade: true})
-    likes?: LikeEntity[];
+    @OneToMany(() => Like, like => like.post, {cascade: true})
+    likes?: Like[];
 
-    @ManyToOne(() => CategoryEntity, category => category.posts)
-    category?: CategoryEntity;
+    @ManyToOne(() => Category, category => category.posts)
+    category?: Category;
 
-    @ManyToMany(() => TagEntity)
+    @ManyToMany(() => Tag)
     @JoinTable()
-    tags?: TagEntity[];
+    tags?: Tag[];
 }

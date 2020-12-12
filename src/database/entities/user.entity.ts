@@ -1,7 +1,7 @@
 import {Entity, Column, OneToMany, BeforeInsert} from 'typeorm'
 import {BaseEntity} from "./base.entity";
-import {PostEntity} from "./post.entity";
-import {LikeEntity} from "./like.entity";
+import {PostData} from "./post.entity";
+import {Like} from "./like.entity";
 import * as bcrypt from 'bcrypt'
 
 enum Roles {
@@ -11,7 +11,7 @@ enum Roles {
 
 @Entity('users')
 
-export abstract class UsersEntity extends BaseEntity {
+ export class User extends BaseEntity {
 
     @Column({type: 'varchar', length: 500, nullable: false})
     name: string;
@@ -68,10 +68,10 @@ export abstract class UsersEntity extends BaseEntity {
     @Column('enum', {enum: Roles, default: Roles.User, select: false})
     role: Roles;
 
-    @OneToMany(() => PostEntity, post => post.user, {cascade: true})
-    posts?: PostEntity[]
+    @OneToMany(() => PostData, post => post.user, {cascade: true})
+    posts?: PostData[];
 
-    @OneToMany(() => LikeEntity, like => like.user, {cascade: true})
-    likes?: LikeEntity[];
+    @OneToMany(() => Like, like => like.user, {cascade: true})
+    likes?: Like[];
 
 }

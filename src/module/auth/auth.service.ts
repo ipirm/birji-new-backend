@@ -1,6 +1,6 @@
 import {Injectable, UnauthorizedException} from '@nestjs/common';
 import {JwtService} from "@nestjs/jwt";
-import {UsersEntity} from "../entities/user.entity";
+import {User} from "../../database/entities/user.entity";
 import {Repository} from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
 import {RegistrationDto} from "./dto/registration-dto";
@@ -13,11 +13,11 @@ export class AuthService {
     constructor(
         private jwtService: JwtService,
         private userService: UserService,
-        @InjectRepository(UsersEntity) private readonly user: Repository<UsersEntity>
+        @InjectRepository(User) private readonly user: Repository<User>
     ) {
     }
 
-    async signIn(user: any) {
+    signIn(user: any) {
         const payload = {
             id: user.id,
             name: user.name,

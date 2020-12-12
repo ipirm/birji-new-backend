@@ -1,11 +1,11 @@
 import {Column, Entity, JoinTable, ManyToMany, OneToMany} from 'typeorm'
 import {BaseEntity} from "./base.entity";
-import {PostEntity} from "./post.entity";
-import {TagEntity} from "./tag.entity";
+import {PostData} from "./post.entity";
+import {Tag} from "./tag.entity";
 
 @Entity('category')
 
-export abstract class CategoryEntity extends BaseEntity {
+export class Category extends BaseEntity {
 
     @Column({type: 'varchar', length: 500, nullable: true})
     title: string;
@@ -13,10 +13,10 @@ export abstract class CategoryEntity extends BaseEntity {
     @Column({type: 'varchar', length: 500, nullable: true})
     description: string;
 
-    @OneToMany(() => PostEntity, post => post.category)
-    posts?: PostEntity[];
+    @OneToMany(() => PostData, post => post.category)
+    posts?: PostData[];
 
-    @ManyToMany(() => TagEntity)
+    @ManyToMany(() => Tag)
     @JoinTable()
-    tags?: TagEntity[];
+    tags?: Tag[];
 }
