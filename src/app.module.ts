@@ -3,18 +3,15 @@ import {ConfigModule} from "@nestjs/config";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import * as ormConfig from "./database/orm.config";
 import {ServeStaticModule} from "@nestjs/serve-static";
-import {AuthModule} from "./module/auth/auth.module";
-import {UserModule} from "./module/user/user.module";
+import {AuthModule} from "./auth/auth.module";
+import {UserModule} from "./user/user.module";
 import {AppService} from "./app.service";
 import {AppController} from "./app.controller";
-import {PostModule} from './module/post/post.module';
-import {LikeController} from './module/like/like.controller';
-import {LikeService} from './module/like/like.service';
-import {LikeModule} from './module/like/like.module';
-import {TagModule} from './module/tag/tag.module';
-import {SearchController} from './module/search/search.controller';
-import {SearchService} from './module/search/search.service';
-import {SearchModule} from './module/search/search.module';
+import {PostModule} from './post/post.module';
+import {LikeModule} from './like/like.module';
+import {TagModule} from './tag/tag.module';
+import {SearchModule} from './search/search.module';
+import {CategoryModule} from './category/category.module';
 
 
 @Module({
@@ -30,10 +27,11 @@ import {SearchModule} from './module/search/search.module';
         PostModule,
         LikeModule,
         TagModule,
-        SearchModule
+        SearchModule,
+        CategoryModule
     ],
-    providers: [AppService, LikeService, SearchService],
-    controllers: [AppController, LikeController, SearchController]
+    providers: [AppService],
+    controllers: [AppController]
 })
 
 export class AppModule {

@@ -1,6 +1,6 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
-import {User} from "../../database/entities/user.entity";
+import {User} from "../database/entities/user.entity";
 import {Repository} from "typeorm";
 import {RegistrationDto} from "../auth/dto/registration-dto";
 import {UpdateUserDto} from "./dto/update-user-dto";
@@ -22,9 +22,7 @@ export class UserService {
                 error: 'This user exist',
             }, HttpStatus.CONFLICT);
 
-
-        const user = this.user.create(registrationDto);
-        return await this.user.save(user);
+        return await this.user.save(this.user.create(registrationDto));
     }
 
     async findOrCreate(profile): Promise<User> {
@@ -62,8 +60,7 @@ export class UserService {
                 Object.assign(createdUser, {vk_id: profile.id})
             }
 
-            const newUser = this.user.create(createdUser)
-            user = await this.user.save(newUser)
+            user = await this.user.save(this.user.create(createdUser))
         }
         return user
 

@@ -31,4 +31,11 @@ export class CreatePostDto {
     @ApiProperty({example: 'Some text about post', description: 'text'})
     text: string;
 
+    @IsString()
+    @ApiProperty({example: '1', description: 'categoryId'})
+    categoryId: string;
+
+    @IsString()
+    @ApiProperty({example: '1', description: 'tagId'})
+    tagId: string;
 }

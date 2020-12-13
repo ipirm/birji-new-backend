@@ -2,7 +2,7 @@ import {Controller, Get, Query, Post, Body, Put, Param, Delete} from '@nestjs/co
 import {UserService} from "./user.service";
 import {ApiOperation, ApiTags} from "@nestjs/swagger";
 import {Pagination} from "nestjs-typeorm-paginate";
-import {User} from "../../database/entities/user.entity";
+import {User} from "../database/entities/user.entity";
 import {RegistrationDto} from "../auth/dto/registration-dto";
 import {UpdateUserDto} from "./dto/update-user-dto";
 import {UpdateResult, DeleteResult} from 'typeorm';
@@ -19,7 +19,8 @@ export class UserController {
     @ApiOperation({summary: 'Get all users'})
     getAll(
         @Query('page') page: number = 1,
-        @Query('limit') limit: number = 10): Promise<Pagination<User>> {
+        @Query('limit') limit: number = 100
+    ): Promise<Pagination<User>> {
         limit = limit > 100 ? 100 : limit;
         return this.user.getAll(page, limit);
     }
@@ -49,6 +50,5 @@ export class UserController {
     deleteUser(@Param('id') id: number): Promise<DeleteResult> {
         return this.user.removeUser(id)
     }
-
 
 }

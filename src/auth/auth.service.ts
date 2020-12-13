@@ -1,6 +1,6 @@
 import {Injectable, UnauthorizedException} from '@nestjs/common';
 import {JwtService} from "@nestjs/jwt";
-import {User} from "../../database/entities/user.entity";
+import {User} from "../database/entities/user.entity";
 import {Repository} from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
 import {RegistrationDto} from "./dto/registration-dto";
@@ -61,6 +61,9 @@ export class AuthService {
     }
 
     async registration(registrationDto: RegistrationDto): Promise<any> {
-        return this.userService.createUser(registrationDto);
+        const user = await this.userService.createUser(registrationDto);
+        return{
+            access_token: this.jwtService.sign({...user})
+        }
     }
 }

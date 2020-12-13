@@ -1,14 +1,26 @@
 import * as Faker from 'faker'
-import {User} from '../entities/User.entity'
-import {define} from "typeorm-seeding";
+import {UserFactoryType} from "../../types/user.factory.type";
 
 
-define(User, (faker: typeof Faker) => {
-    const user = new User();
-    user.name = faker.name.firstName();
-    user.last_name = faker.name.lastName();
-    user.email = faker.internet.email();
-    user.password = faker.internet.password();
-    user.avatar = faker.internet.avatar();
-    return user
-})
+export class UserFactory {
+    faker: any = Faker;
+    users: UserFactoryType[] = [];
+    count: number = 1
+
+    constructor(count: number) {
+        this.count = count;
+    }
+
+    make() {
+        for (let i = 0; i < this.count; i++) {
+            this.users.push({
+                name: this.faker.name.firstName(),
+                last_name: this.faker.name.lastName(),
+                email: this.faker.internet.email(),
+                password: this.faker.internet.password(),
+                avatar: this.faker.internet.avatar()
+            })
+        }
+        return this.users
+    }
+}

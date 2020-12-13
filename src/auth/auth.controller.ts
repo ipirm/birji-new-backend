@@ -1,7 +1,7 @@
 import {Controller, Get, Body, UseGuards, HttpStatus, Request, Post, Res, Req} from '@nestjs/common';
 import {JwtAuthGuard} from "./jwt/jwt-auth.guard";
 import {AuthService} from "./auth.service";
-import {User} from "../../decorators/user.decorator";
+import {User} from "../decorators/user.decorator";
 import {AuthGuard} from "@nestjs/passport";
 import {RegistrationDto} from "./dto/registration-dto";
 import {LoginDto} from "./dto/login-dto";
@@ -38,7 +38,7 @@ export class AuthController {
 
     @Get('google/redirect')
     @UseGuards(AuthGuard('google'))
-    async googleAuthRedirect(@Request() req, @Res() res) {
+    async googleAuthRedirect(@Request() req, @Res() res): Promise<void> {
         const url = await this.auth.signIn(req.user);
         return res.redirect(`${process.env.FRONT_URL}/?access_token=${url.access_token}`)
     }
@@ -51,7 +51,7 @@ export class AuthController {
 
     @Get("facebook/redirect")
     @UseGuards(AuthGuard("facebook"))
-    async facebookLoginRedirect(@Req() req, @Res() res): Promise<any> {
+    async facebookLoginRedirect(@Req() req, @Res() res): Promise<void> {
         const url = await this.auth.signIn(req.user);
         return res.redirect(`${process.env.FRONT_URL}/?access_token=${url.access_token}`)
     }
@@ -64,7 +64,7 @@ export class AuthController {
 
     @Get("vkontakte/redirect")
     @UseGuards(AuthGuard("vkontakte"))
-    async vkontakteLoginRedirect(@Req() req, @Res() res): Promise<any> {
+    async vkontakteLoginRedirect(@Req() req, @Res() res): Promise<void> {
         const url = await this.auth.signIn(req.user);
         res.redirect(`${process.env.FRONT_URL}/?access_token=${url.access_token}`)
     }
@@ -78,8 +78,7 @@ export class AuthController {
 
     @Get("twitter/redirect")
     @UseGuards(AuthGuard("twitter"))
-    async twitterLoginRedirect(@Req() req, @Res() res): Promise<any> {
-        console.log(req.user);
+    async twitterLoginRedirect(@Req() req, @Res() res): Promise<void> {
         const url = await this.auth.signIn(req.user);
         res.redirect(`${process.env.FRONT_URL}/?access_token=${url.access_token}`)
     }

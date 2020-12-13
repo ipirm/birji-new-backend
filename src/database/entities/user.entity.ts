@@ -9,9 +9,9 @@ enum Roles {
     User = 'user',
 }
 
-@Entity('users')
+@Entity('user')
 
- export class User extends BaseEntity {
+export class User extends BaseEntity {
 
     @Column({type: 'varchar', length: 500, nullable: false})
     name: string;
@@ -21,6 +21,15 @@ enum Roles {
 
     @Column({type: 'varchar', length: 500, nullable: true, select: false})
     full_name: string;
+
+    @Column({type: 'varchar', length: 500, nullable: true})
+    likeCount: number;
+
+    @Column({type: 'varchar', length: 500, nullable: true})
+    reviewCount: number;
+
+    @Column({type: 'varchar', length: 500, nullable: true})
+    savedCount: number;
 
     @BeforeInsert()
     async generateFullName(): Promise<void> {
@@ -74,4 +83,6 @@ enum Roles {
     @OneToMany(() => Like, like => like.user, {cascade: true})
     likes?: Like[];
 
+    @OneToMany(() => Like, like => like.user, {cascade: true})
+    liked?: Like[];
 }

@@ -1,9 +1,10 @@
-import {Entity, Column, ManyToOne, OneToMany, ManyToMany, JoinTable} from 'typeorm'
+import {Entity, Column, ManyToOne, OneToMany, ManyToMany, JoinTable, JoinColumn, BeforeInsert} from 'typeorm'
 import {BaseEntity} from "./base.entity";
 import {User} from "./user.entity";
 import {Like} from "./like.entity";
 import {Category} from "./category.entity";
 import {Tag} from "./tag.entity";
+import {default as slugify} from 'slugify';
 
 @Entity('posts')
 
@@ -22,6 +23,14 @@ export class PostData extends BaseEntity {
     title: string;
 
     @Column({type: 'varchar', length: 500, nullable: true})
+    slug: string;
+
+    @BeforeInsert()
+    async generateSlug(): Promise<void> {
+        this.slug = await slugify(this.title, {lower: true, replacement: '-'})
+    }
+
+    @Column({type: 'varchar', length: 500, nullable: true})
     description: string;
 
     @Column({type: 'varchar', length: 10000, nullable: true})
@@ -33,6 +42,9 @@ export class PostData extends BaseEntity {
     @Column({type: 'varchar', length: 500, nullable: true})
     reviewCount: number;
 
+    @Column({type: 'varchar', length: 500, nullable: true})
+    savedCount: number;
+
     @ManyToOne(() => User, user => user.posts)
     user: User;
 
@@ -40,6 +52,7 @@ export class PostData extends BaseEntity {
     likes?: Like[];
 
     @ManyToOne(() => Category, category => category.posts)
+    @JoinColumn({name: 'categoryId'})
     category?: Category;
 
     @ManyToMany(() => Tag)
