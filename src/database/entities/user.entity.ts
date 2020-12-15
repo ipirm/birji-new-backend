@@ -62,7 +62,7 @@ export class User extends BaseEntity {
     @Column({type: 'varchar', length: 500, nullable: true, select: false})
     google_id: number;
 
-    @Column({type: 'varchar', length: 500, nullable: true, select: false})
+    @Column({type: 'varchar', length: 500, nullable: true})
     twitter_id: number;
 
     @Column({type: 'varchar', length: 500, nullable: true, select: false})

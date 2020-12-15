@@ -29,7 +29,7 @@ export class UserService {
         const {provider} = profile
         let user;
         if (provider === 'twitter') {
-            user = await this.user.findOne({twitter_id: profile.id});
+            user = await this.user.findOne({twitter_id: parseInt(profile.id)});
         }
         if (provider === 'google') {
             user = await this.user.findOne({google_id: profile.id});
