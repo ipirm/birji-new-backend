@@ -59,6 +59,9 @@ export class UserService {
             if (provider === 'vkontakte') {
                 Object.assign(createdUser, {vk_id: profile.id})
             }
+            if (provider === 'twitter') {
+                Object.assign(createdUser, {twitter_id: profile.id})
+            }
 
             user = await this.user.save(this.user.create(createdUser))
         }
