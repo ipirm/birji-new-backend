@@ -14,8 +14,7 @@ export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
             scope: ["email"],
             profileFields: ['id', 'displayName', 'name','emails','email']
         }, async (token, tokenSecret, profile) => {
-            console.log(profile);
-            // await this.userService.findOrCreate(profile)
+             await this.userService.findOrCreate(profile)
         })
     }
 }
