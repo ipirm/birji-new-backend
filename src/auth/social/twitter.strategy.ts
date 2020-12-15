@@ -13,9 +13,10 @@ export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
             callbackURL: process.env.TWITTER_CALLBACK_URL,
             scope: ["email"],
             profileFields: ['id', 'displayName', 'name', 'emails', 'email']
-        }, async (token, tokenSecret, profile) => {
-            console.log(profile);
-            await this.userService.findOrCreate(profile)
+        }, async (token, tokenSecret, profile,done) => {
+            console.log(profile)
+            const user = await this.userService.findOrCreate(profile)
+            done(null, user);
         })
     }
 }
