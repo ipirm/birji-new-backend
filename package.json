@@ -48,7 +48,6 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
     "passport-twitter": "^1.0.4",
-    "passport-twitter-oauth2": "^2.1.1",
     "passport-vkontakte": "^0.5.0",
     "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",

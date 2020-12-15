@@ -16,7 +16,7 @@ export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
                   params: any,
                   profile: any) => {
             console.log(profile);
-            await this.userService.findOrCreate(profile)
+            // await this.userService.findOrCreate(profile)
         })
     }
 }

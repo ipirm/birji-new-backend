@@ -7,8 +7,8 @@ const config: any = {
     // password: "root",
     // database: "birji_db",
     // entities: ["dist/database/**/*.entity.js"],
-    // factories: [ "dist/database/factories/**/*.js" ],
-    // seeds: [ "dist/database/seeds/**/*.js"],
+    // factories: ["dist/database/factories/**/*.js"],
+    // seeds: ["dist/database/seeds/**/*.js"],
     // migrations: ["dist/migration/*.js"],
     // migrationsRun: true,
     // synchronize: true,
@@ -17,8 +17,6 @@ const config: any = {
     //     migrationsDir: 'src/database/migrations',
     // }
 
-//
-    // npx typeorm migration:create -n ArticleTable -d src/migrations
 
     type: 'postgres',
     host: 'ec2-3-218-123-191.compute-1.amazonaws.com',
@@ -36,6 +34,6 @@ const config: any = {
     cli: {
         migrationsDir: "migrations"
     }
-
 }
+
 export = config;
