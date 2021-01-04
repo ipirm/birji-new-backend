@@ -21,6 +21,7 @@ async function bootstrap() {
             saveUninitialized: false,
         }),
     );
+    app.enableCors();
     SwaggerModule.setup('api', app, document);
     await app.listen(process.env.PORT || 3000);
 }

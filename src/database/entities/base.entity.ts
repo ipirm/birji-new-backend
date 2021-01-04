@@ -15,4 +15,5 @@ export class BaseEntity {
     updateTimestamp() {
         this.updatedAt = new Date;
     }
+
 }

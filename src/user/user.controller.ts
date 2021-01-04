@@ -25,7 +25,7 @@ export class UserController {
         return this.user.getAll(page, limit);
     }
 
-    @Get(':id')
+    @Get('/user/:id')
     @ApiOperation({summary: 'Get user by id'})
     getUser(@Param('id') id: number): Promise<User> {
         return this.user.getUser(id)
@@ -49,6 +49,15 @@ export class UserController {
     @ApiOperation({summary: 'Delete user'})
     deleteUser(@Param('id') id: number): Promise<DeleteResult> {
         return this.user.removeUser(id)
+    }
+
+    @Get('authors')
+    @ApiOperation({summary: 'GET authors'})
+    getAuthors(
+        @Query('page') page: number = 1,
+        @Query('limit') limit: number = 100
+    ): Promise<any> {
+        return this.user.getAuthors(page, limit)
     }
 
 }

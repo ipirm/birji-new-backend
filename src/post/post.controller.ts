@@ -23,9 +23,11 @@ export class PostController {
         @Query('limit') limit: number = 100,
         @Query('cat') cat: string,
         @Query('tag') tag: string,
+        @Query('sort_by') sort_by: string,
+        @Query('order_by') order_by: string,
         @Query('author') author: string
     ): Promise<Pagination<PostData>> {
-        return this.post.getAll(page, limit, cat, tag, author)
+        return this.post.getAll(page, limit, cat, tag, author,sort_by,order_by)
     }
 
     @Get(':slug')
@@ -55,4 +57,12 @@ export class PostController {
         return this.post.deletePost(id)
     }
 
+    @Put('/:id/:draft')
+    @ApiOperation({summary: 'Publish post'})
+    publishPost(
+        @Param('id') id: number,
+        @Param('draft') draft: boolean
+    ): Promise<UpdateResult> {
+        return this.post.publish(id,draft)
+    }
 }

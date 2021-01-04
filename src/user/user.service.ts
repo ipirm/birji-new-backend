@@ -99,5 +99,11 @@ export class UserService {
     async getUser(id): Promise<User> {
         return await this.user.findOne(id)
     }
+    async getAuthors(page,limit): Promise<Pagination<User>> {
+        const data = await this.user.createQueryBuilder('user')
+            .leftJoinAndSelect("user.posts", "posts")
+            .where('posts.id IS NOT NULL')
 
+        return await paginate(data, {page, limit});
+    }
 }

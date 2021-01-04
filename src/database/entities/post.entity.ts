@@ -45,6 +45,9 @@ export class PostData extends BaseEntity {
     @Column({type: 'varchar', length: 500, nullable: true})
     savedCount: number;
 
+    @Column({type: 'boolean', default: true})
+    draft: boolean;
+
     @ManyToOne(() => User, user => user.posts)
     user: User;
 

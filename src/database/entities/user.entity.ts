@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt'
 enum Roles {
     Admin = 'admin',
     User = 'user',
+    Author = 'author'
 }
 
 @Entity('user')

@@ -34,13 +34,13 @@ export class PostService {
         return await this.post.save(this.post.create({...createPostDto, user: user, category: category}))
     }
 
-    async getAll(page, limit, cat, tag, author): Promise<Pagination<PostData>> {
+    async getAll(page, limit, cat, tag, author, sort_by, order_by): Promise<Pagination<PostData>> {
         const data = await this.post.createQueryBuilder('post')
             .leftJoinAndSelect("post.user", "user")
             .leftJoinAndSelect("post.category", "category")
             .leftJoinAndSelect("post.tags", "tags")
             .leftJoinAndSelect("post.likes", "likes")
-            .orderBy('post.id', 'ASC');
+            .orderBy('post.createdAt', 'DESC');
 
         if (cat)
             data.where("category.id = :catId", {catId: cat});
@@ -52,7 +52,14 @@ export class PostService {
             data.andWhere("user.id = :userId", {userId: author});
 
 
+        if(sort_by && order_by){
+            data.orderBy('post.'+sort_by,order_by)
+        }
         return await paginate(data, {page, limit});
+    }
+
+    async publish(id, draft): Promise<UpdateResult> {
+        return this.post.update(id, {draft: draft})
     }
 
     async updatePost(id, updatePostDto: UpdatePostDto): Promise<UpdateResult> {
